@@ -21,6 +21,9 @@
             <span class="titulo">OverSeries</span>
             <input class="search-box" type="text" ng-model="input" name="input" placeholder="Digite sua pesquisa aqui" onfocus="placeholder=''" onblur="placeholder='Digite sua pesquisa aqui'"/>
             <button id="search-button" class="search-button" ng-click="searchInput()"><i class="glyphicon glyphicon-search"></i></button>
+            <button class="sign-button" type="button" name="button" ng-show="logon == true" ng-click="logoff()">{{usuario.nome}}</button>
+        	  <button class="sign-button" type="button" name="button" ng-show="logon == false" ng-click="signup()">CADASTRO</button>
+        	  <button class="sign-button" type="button" name="button" ng-show="logon == false" ng-click="login()">LOGIN /</button>
         </form>
     </div>
 
@@ -57,15 +60,15 @@
                                                     <p><b>Faixa Etária: </b>{{serie.Rated}}</p>
                                                     <p><b>Sinopse: </b>{{serie.Plot}}</p>
                                                     <b>
-                                                    <p><b>Sua Nota: </b>{{serie.userRating}}
+                                                    <p><b>Sua Nota: </b>{{serie.avaliacao}}
                                                         <div class="form-group">
-                                                            <input type="text" ng-model="userRating" placeholder="Ex.: 10.0">
-                                                            <button class="btn btn-default btn-sm" ng-click="serie.userRating= userRating"type="button"><i class="glyphicon glyphicon-ok-sign" style="color: red"></i>  </button>
+                                                            <input type="text" ng-model="avaliacao" placeholder="Ex.: 10.0">
+                                                            <button class="btn btn-default btn-sm" ng-click="sendRating(serie, avaliacao)"type="button"><i class="glyphicon glyphicon-ok-sign" style="color: red"></i>  </button>
                                                         </div>
-                                                        <p><b>Último Episódio: </b>{{serie.lastEpisode}}</p>
+                                                        <p><b>Último Episódio: </b>{{serie.ultimoEpisodio}}</p>
                                                         <div class="form-group">
-                                                            <input type="text" ng-model="lastEpisode" placeholder="Ex.: S01E01">
-                                                            <button class="btn btn-default btn-sm" type="button" ng-click="serie.lastEpisode = lastEpisode"><i class="glyphicon glyphicon-ok-sign" style="color: red"></i>  </button>
+                                                            <input type="text" ng-model="ultimoEpisodio" placeholder="Ex.: S01E01">
+                                                            <button class="btn btn-default btn-sm" type="button" ng-click="sendLastEpisode(serie, ultimoEpisodio)"><i class="glyphicon glyphicon-ok-sign" style="color: red"></i>  </button>
                                                         </div>
                                                     </div>
 

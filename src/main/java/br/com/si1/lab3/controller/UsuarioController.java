@@ -19,30 +19,35 @@ import br.com.si1.lab3.services.UsuarioService;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
 	@Autowired
 	private SerieService serieService;
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<Usuario> adicionar(@RequestBody Usuario usuario) {
-		Usuario novoUsuario = usuarioService.adicionar(usuario);
-		if(novoUsuario == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		
-		return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED); 
+	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
+		Usuario usuarioCadastrado = usuarioService.cadastrar(usuario);
+		if (usuario == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		return new ResponseEntity<>(usuarioCadastrado, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<Usuario> logar(@RequestBody Usuario usuario) {
 		usuario = usuarioService.logar(usuario);
-		if(usuario == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		
+		if (usuario == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<List<Serie>> consultarSeries(@PathVariable Integer usuarioId) {
-		List<Serie> series = serieService.seriesDoUsuario(usuarioId);
+
+	@RequestMapping(value = "/{usuarioID}/series", method = RequestMethod.GET)
+	public ResponseEntity<List<Serie>> consultarSeries(@PathVariable Integer usuarioID) {
+		List<Serie> series = serieService.seriesDoUsuario(usuarioID);
 		return new ResponseEntity<>(series, HttpStatus.OK);
 	}
+
 }

@@ -13,37 +13,30 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	public Usuario adicionar(Usuario usuario) {
-		if(existeUsuario(usuario)) return null;
-		return usuarioRepository.save(usuario);
-	}
-	
-	private boolean existeUsuario(Usuario usuario) {
+	public Usuario cadastrar(Usuario usuario) {
 		List<Usuario> usuarios = usuarioRepository.findAll();
-		for(Usuario user : usuarios) {
-			if(user.getEmail().equals(usuario.getEmail())) {
-				return true;
+		for (Usuario usuarioB : usuarios) {
+			if (usuarioB.getEmail().equals(usuario.getEmail())) {
+				return null;
 			}
 		}
-		
-		return false;
+		return usuarioRepository.save(usuario);
 	}
 	
 	public Usuario logar(Usuario usuario) {
 		return logar(usuario.getEmail(), usuario.getSenha());
 	}
-
-	private Usuario logar(String email, String senha) {
+	
+	public Usuario logar(String email, String senha) {
 		List<Usuario> usuarios = usuarioRepository.findAll();
-		for(Usuario user : usuarios) {
-			if(user.getEmail().equals(email)) {
-				if(user.getSenha().equals(senha)) {
-					return user;
+		for (Usuario usuario : usuarios) {
+			if (usuario.getEmail().equals(email)) {
+				if(usuario.getSenha().equals(senha)) {
+					return usuario;
 				}
 			}
 		}
 		return null;
 	}
-	
-	
+
 }

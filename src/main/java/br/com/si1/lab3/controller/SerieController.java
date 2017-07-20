@@ -16,26 +16,26 @@ import br.com.si1.lab3.services.SerieService;
 @RequestMapping("/serie")
 public class SerieController {
 	
-	
 	@Autowired
 	private SerieService serieService;
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Serie> adicionar(@RequestBody Serie serie) {
 		Serie serieAdicionada = serieService.adicionar(serie);
 		return new ResponseEntity<>(serieAdicionada, HttpStatus.CREATED);
 	}
-	
+
 	@RequestMapping(value = "/{serieID}", method = RequestMethod.DELETE)
-	public ResponseEntity<Serie> remover(@PathVariable Integer serieId) {
-		Serie serie = serieService.getSerie(serieId);
-		Serie serieRemovida = serieService.excluir(serie);
+	public ResponseEntity<Serie> remover(@PathVariable Integer serieID) {
+		Serie serieRemovida = serieService.excluir(serieID);
 		return new ResponseEntity<>(serieRemovida, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<Serie> atualizar(@RequestBody Serie serie, @PathVariable Integer serieId) {
-		serie.setId(serieId);
+
+	@RequestMapping(value = "/{serieID}", method = RequestMethod.PUT)
+	public ResponseEntity<Serie> atualizar(@RequestBody Serie serie, @PathVariable Integer serieID) {
+		serie.setId(serieID);
 		Serie serieAtualizada = serieService.atualizar(serie);
 		return new ResponseEntity<>(serieAtualizada, HttpStatus.OK);
 	}
+
 }

@@ -11,7 +11,6 @@ import br.com.si1.lab3.repositories.SerieRepository;
 
 @Service
 public class SerieService {
-	
 	@Autowired
 	private SerieRepository serieRepository;
 	
@@ -34,23 +33,29 @@ public class SerieService {
 		return serie;
 	}
 	
-	public Serie getSerie(Integer serieId) {
-		return serieRepository.findOne(serieId);
+	public Serie getSerie(Integer serieID) {
+		return serieRepository.findOne(serieID);
 	}
 	
 	public List<Serie> getSeries() {
 		return serieRepository.findAll();
 	}
 	
-	public List<Serie> seriesDoUsuario(Integer usuarioId) {
-		List<Serie> series = this.getSeries();
-		List<Serie> seriesDoUsario = new ArrayList<Serie>();
+	public List<Serie> seriesDoUsuario(Integer usuarioID) {
+		List<Serie> series = getSeries();
+		List<Serie> seriesDoUsuario = new ArrayList<Serie>();
 		for(Serie serie : series) {
-			if(serie.getUsarioId().equals(usuarioId)) {
-				seriesDoUsario.add(serie);
+			if (serie.getUsuarioID().equals(usuarioID)) {
+				seriesDoUsuario.add(serie);
 			}
 		}
-		
-		return seriesDoUsario;
+		return seriesDoUsuario;
 	}
+	
+	public boolean usuarioPossuiSerie(Integer usuarioID, Integer serieID) {
+		List<Serie> seriesDoUsuario = seriesDoUsuario(usuarioID);
+		Serie seriePesquisada = getSerie(serieID);
+		return seriesDoUsuario.contains(seriePesquisada);
+	}
+
 }
